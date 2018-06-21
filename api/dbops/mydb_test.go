@@ -7,7 +7,7 @@ import (
 )
 
 func TestDBConnection(t *testing.T) {
-	db, err := sql.Open("mysql", "user:password@/dbname")
+	db, err := sql.Open("mysql", "root:123456@/video_server")
 	if err != nil {
 	    panic(err.Error()) // Just for example purpose. You should use proper error handling instead of panic
 	}
