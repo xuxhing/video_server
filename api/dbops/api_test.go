@@ -5,9 +5,13 @@ import (
 	"strconv"
 	"time"
 	"fmt"
+	"video_server/api/utils"
 )
 
-var tempvid string
+var (
+	tempvid string
+	tempsid string
+)
 
 // init(dblogin, truncate tables)-> run tests -> clear data(truncate tables)
 
@@ -128,4 +132,32 @@ func testListComments(t *testing.T) {
 	for i, ele:=range res {
 		fmt.Printf("comment: %d, %+v \n", i, ele)
 	}
+}
+
+func TestSessions(t *testing.T) {
+	clearTables()
+	t.Run("AddSession", testAddSession)
+	t.Run("RetriveOneSession", testRetriveSession)
+	clearTables()
+}
+
+func testAddSession(t * testing.T) {
+	sid, err:=utils.NewUUID()
+	if err!=nil{
+		t.Errorf("Error of UUID, %v", err)
+	}
+	tempsid = sid
+	ttl:=int64(129183174987124)
+	err= InsertSession(sid, ttl, "skyone")
+	if err!=nil{
+		t.Errorf("Error of InsertSession: %v", err)
+	}
+}
+
+func testRetriveSession(t *testing.T) {
+	res, err:=RetrieveSession(tempsid)
+	if err!=nil{
+		t.Errorf("Error of RetriveSession: %v", err)
+	}
+	fmt.Printf("session: %+v", res)
 }
