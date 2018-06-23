@@ -84,7 +84,3 @@ func DeleteSession(sid string) error {
 	defer stmtOut.Close()
 	return nil
 }
-
-func LoadSessionsFromDB() {
-
-}
