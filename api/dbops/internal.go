@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"sync"
 	"video_server/api/defs"
+	"log"
 )
 
 func InsertSession(sid string, ttl int64, uname string) error {
@@ -41,5 +42,49 @@ func RetrieveSession(sid string) (*defs.SimpleSession, error) {
 }
 
 func RetrieveAllSessions() (*sync.Map, error) {
-	return nil, nil
+	m:=&sync.Map{}
+	stmtOut, err:=dbConn.Prepare("SELECT * FROM sessions")
+	if err!=nil {
+		log.Printf("%s", err)
+	}
+	rows, err:=stmtOut.Query()
+	if err!=nil{
+		log.Printf("%s", err)
+		return nil, err
+	}
+	for rows.Next() {
+		var id string
+		var ttlstr string
+		var login_name string
+		if err:=rows.Scan(&id, &ttlstr, &login_name); err!=nil {
+			log.Printf("retrieve sessions error: %s", err)
+			break
+		}
+
+		if ttl, err1:=strconv.ParseInt(ttlstr, 10, 64);err1==nil{
+			ss:=&defs.SimpleSession{Username: login_name, TTL: ttl}
+			m.Store(id, ss)
+			log.Printf(" session id:  %s, ttl: %d", id, ss.TTL)
+		} else {
+			log.Printf("parse TTL error: %s", err)
+			break
+		}
+	}
+	return m, nil
+}
+
+func DeleteSession(sid string) error {
+	stmtOut, err:=dbConn.Prepare("DELETE FROM sessions WHERE session_id=?")
+	if err!=nil{
+		return err
+	}
+	if _, err := stmtOut.Query(sid); err!=nil{
+		return err
+	}
+	defer stmtOut.Close()
+	return nil
+}
+
+func LoadSessionsFromDB() {
+
 }
