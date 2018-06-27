@@ -6,7 +6,7 @@ import (
 )
 
 func ReadVideoDeletionRecord(count int) ([]string, error) {
-	stmtOut, err:=dbConn.Prepare("SELECT video_id FROM video_server LIMIT ?")
+	stmtOut, err:=dbConn.Prepare("SELECT video_id FROM video_del_rec LIMIT ?")
 	var ids []string
 	if err!=nil{
 		return ids, err
@@ -29,7 +29,7 @@ func ReadVideoDeletionRecord(count int) ([]string, error) {
 }
 
 func DelVideoDeletionRecord(vid string) error {
-	stmtDel, err:=dbConn.Prepare("DELETE FROM video_del_record WHERE video_id=?")
+	stmtDel, err:=dbConn.Prepare("DELETE FROM video_del_rec WHERE video_id=?")
 	if err!=nil {
 		return err
 	}

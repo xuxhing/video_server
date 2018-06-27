@@ -6,7 +6,7 @@ import (
 )
 
 func AddVideoDeletionRecord(vid string) error {
-	stmtIns, err:=dbConn.Prepare("INSERT INTO video_del_record(video_id) VALUES(?)")
+	stmtIns, err:=dbConn.Prepare("INSERT INTO video_del_rec(video_id) VALUES(?)")
 	if err!=nil{
 		return err
 	}
