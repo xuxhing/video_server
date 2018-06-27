@@ -16,6 +16,6 @@ func vidDelRecHandler(w http.ResponseWriter, r *http.Request, p httprouter.Param
 		sendResponse(w, 500, "Internal server error")
 		return
 	}
-	sendResponse(w, 200, "")
+	sendResponse(w, 200, "delete video successfully")
 	return
 }
