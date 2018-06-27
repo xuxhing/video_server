@@ -47,7 +47,7 @@ func (r *Runner) startDispatch() {
 			}
 
 			if c==READY_TO_EXECUTE {
-				err:=r.Execute(r.Data)
+				err:=r.Executor(r.Data)
 				if err!=nil {
 					r.Error <- CLOSE
 				} else {

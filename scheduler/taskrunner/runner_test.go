@@ -1,3 +1,12 @@
+package taskrunner
+
+import (
+	"testing"
+	"log"
+	"time"
+	"errors"
+)
+
 func TestRunner(t *testing.T) {
 	d:=func(dc dataChan) error {
 		for i:=0;i<30;i++{
@@ -18,10 +27,11 @@ func TestRunner(t *testing.T) {
 					break forloop
 				}
 			}
-		return nil
+		return errors.New("Executor")
 	}
 
 	runner := NewRunner(30, false , d, e)
 	go runner.StartAll()
 	time.Sleep(3*time.Second)
+	log.Printf("Exit due to time elapsed.")
 }
