@@ -1,5 +1,11 @@
 package scheduler
 
-import ()
+import (
+	"net/http"
+	"io"
+)
 
-func funcR() {}
+func sendResponse(w http.ResponseWriter, sc int, resp string) {
+	w.WriteHeader(sc)
+	io.WriteString(w, resp)
+}
