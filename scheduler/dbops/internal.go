@@ -23,7 +23,9 @@ func ReadVideoDeletionRecord(count int) ([]string, error) {
 		} 
 		ids = append(ids, id)
 	}
-
+	//for _, id:=range ids {
+	//	log.Printf("SELECT video_id FROM video_del_rec includes %s\n", id)
+	//}
 	defer stmtOut.Close()
 	return ids, nil
 }
