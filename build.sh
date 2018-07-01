@@ -4,6 +4,6 @@
 cd ./web
 pwd
 go install
-cp ../../../bin/web.exe ../../../bin/video_server_web_ui/web
+cp ~/bin/web.exe ~/bin/video_server_web_ui/web.exe
 pwd
-cp -R /f/GoProjects/src/video_server/template /f/GoProjects/bin/video_server_web_ui/
+cp -R ~/src/video_server/templates ~/bin/video_server_web_ui/
